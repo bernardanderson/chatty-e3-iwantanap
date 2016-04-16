@@ -1,6 +1,5 @@
-"use strict"
+"use strict";
 var Chatty = (function(oldChatty) {
-
 
     oldChatty.deleteSingleMessage = function(msgId) {
         for (let deleteThisId in Chatty.getMessages()) {

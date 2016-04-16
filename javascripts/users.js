@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var Chatty = ((oldChatty) => {
 
@@ -17,30 +17,31 @@ var Chatty = ((oldChatty) => {
     oldChatty.addUsersToDom = () => {
         let userArray = users.names;
         let buildUserDropDown = "";
-        for (let i = 0; i < userArray.length; i++) {
-            buildUserDropDown += `<option value=${userArray[i]}>${userArray[i]}</option>`
-        }
-        document.getElementById("user-dropdown").innerHTML = `<option value="defaultVal">Select User</option>` + buildUserDropDown + `<option value="addUser">+Add User</option>`;
+        $(userArray).each( function() {
+          buildUserDropDown += `<option value=${this}>${this}</option>`;
+        });
+        $("#user-dropdown").html(`<option value="defaultVal">Select User</option>${buildUserDropDown}<option value="addUser">+Add User</option>`);
     };
 
 
     // Selects users at time of message being entered and returns the value
     oldChatty.selectUsers  = () => { 
-        let selectedUser = document.getElementById("user-dropdown").value; 
+        // let selectedUser = document.getElementById("user-dropdown").value; 
+        let selectedUser = $("#user-dropdown").val();
         if (selectedUser === "defaultVal") {
-            alert("Select a user, bozo.")
+            alert("Select a user, bozo.");
         } else if (selectedUser === "addUser"){ 
             selectedUser = "Idiot"; //If user somehow gets through both prompts without adding their name, they are assigned appropriate name value
             return selectedUser;
         } else {
             return selectedUser;
         }
-    }
+    };
 
     oldChatty.getUsers = () => {
         return users;
-    }
+    };
 
 
-    return oldChatty
+    return oldChatty;
 })(Chatty);

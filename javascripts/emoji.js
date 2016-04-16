@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var Chatty = ( (oldChatty) => {
 
@@ -14,10 +14,10 @@ var Chatty = ( (oldChatty) => {
     for (let emojiKey in emojiList) {
       if (sentMessageString.includes(emojiKey)) {
         sentMessageString = sentMessageString.replace(emojiKey, emojiList[emojiKey]);
-      };
-    };
+      }
+    }
     return sentMessageString;
-  }
+  };
 
   // Removes Emoji <img> tags for messages so the returned message text
   //  looks like what the user type (for editing)
@@ -25,11 +25,11 @@ var Chatty = ( (oldChatty) => {
     for (let emojiKey in emojiList) {
       if (sentMessageString.includes(emojiList[emojiKey])) {
         sentMessageString = sentMessageString.replace(emojiList[emojiKey], emojiKey);
-      };
-    };
+      }
+    }
     return sentMessageString;
-  }
+  };
 
-  return oldChatty
+  return oldChatty;
 
 })(Chatty);

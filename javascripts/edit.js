@@ -7,23 +7,27 @@ var Chatty = ((oldChatty) => {
         let messageId = thisMessage.id; 
         let messageToEditText = thisMessage.getElementsByTagName("p")[1]; //gathers message content
         let messageValue = messageToEditText.innerHTML;  //gathers message content
+
         messageValue = messageValue.replace(/<p.*<\/p>/g, "");  //removes "edited tag" from any messages previously edited when user puts a message into edit mode multiple times
         messageValue = Chatty.removeEmoji(messageValue); //puts any images into regular [] form for edit purposes
         messageValue = Chatty.revertCurse(messageValue, messageId); 
         messageToEditText.innerHTML = `<input type="text" id="editMode">`; //inserts text input mode where message text was displayed
-        let editMode = document.getElementById("editMode"); //selects element in editMode
+
+        var editMode = $("#editMode")[0];
         editMode.value = messageValue; //inserts current message text as default value for text input
-        editMode.addEventListener("keypress", (e) => {
-            if (event.code === "Enter") {
+        $("#editMode").bind("keypress", function() {
+            if (event.which === 13) {
                 let edittedText = editMode.value; //grabs input value and stores it in a new var
                 edittedText = Chatty.addEmoji(edittedText); //transforms and [] elements back into emojis
                 let editTimestamp = new Date(); //creates timestamp for edited time
-                let editingUser = document.getElementById("user-dropdown").value; //grabs user value at time of edit
+                let editingUser = $("#user-dropdown").val(); //grabs user value at time of edit
                 if (editingUser === "addUser" || editingUser === "defaultVal") {
                     editingUser = "Idiot"
                 } else if (editingUser) {
                     editingUser = editingUser.charAt(0).toUpperCase() + editingUser.slice(1);
                 }
+
+             /// You are editing around here!!!   
                 let edittedAt = `<p class="editedTag"> edited at ${editTimestamp} by ${editingUser}</p>`; //adds element that lets users know the last time the message was edited
                 messageToEditText.innerHTML = edittedText //replaces message content area with new updated message
                 Chatty.editMessage(messageId, edittedText, edittedAt); //updates private message array
